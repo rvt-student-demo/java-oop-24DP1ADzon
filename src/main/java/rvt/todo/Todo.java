@@ -8,60 +8,73 @@ import java.util.Scanner;
 
 public class Todo {
     Scanner reader;
-
-    public Todo() {
+    
+    public ArrayList<String> readFile(){
+        ArrayList<String> fileData = new ArrayList<>();
         try {
-            this.reader = new Scanner(new File("data/todo.csv"));
+            Scanner reader = new Scanner(new File("data/todo.csv"));
+            while (reader.hasNextLine()) {
+                fileData.add(reader.nextLine());
+            }           
+
         } catch (Exception e) {
-            System.out.println("Problems in constructor: " + e);
+            System.out.println("Failed to read the file: " + e.getMessage());
         }
+        return fileData;
     }
 
-    public void add(String task){
-        try{            
-            Writer writer = new FileWriter("data/todo.csv", true); // append=true
-            writer.write(task + "\n");
+    public void writeFile(ArrayList<String> fileData){
+        try {
+            Writer writer = new FileWriter("data/todo.csv");
+            for(int i = 0; i < fileData.size(); i++){
+                String[] stringParts = fileData.get(i).split(",");
+                writer.write((i + 1) + "," + stringParts[1] + "\n");
+            }
             writer.flush();
             writer.close();
-                   
-        } catch (Exception e){
-            System.out.println("Failed to add a task: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+    
+    public void add(String task){
+        ArrayList<String> tasks = this.readFile();
+        tasks.add("," + task);
+        this.writeFile(tasks);
+        System.out.println("Task has been saved successfully!"); // Move to UserInterface later
     }
 
     public void print(){
-        while(this.reader.hasNextLine()){
-            String line = reader.nextLine();
-            String[] parts = line.split(",");
-            System.out.println(parts[0] + ": " + parts[1]);
+        ArrayList<String> tasks = this.readFile();
+        System.out.println("\nList of your tasks: \n");
+
+        for(int i = 0; i < tasks.size(); i++){
+            String[] stringParts = tasks.get(i).split(",");
+            System.out.println(stringParts[0] + ": " + stringParts[1]);
         }
     }
 
     public void remove(int taskId){
-        ArrayList<String> tasks = new ArrayList<>();
-        try{
-            while(this.reader.hasNextLine()){
-                tasks.add(reader.nextLine());
-            }
-        } catch(Exception e){
-            System.out.println("Failed to open tasks: " + e.getMessage());
-        }
+        ArrayList<String> tasks = this.readFile();
+        tasks.remove(taskId - 1);
+        this.writeFile(tasks);
 
-        try{
-            tasks.remove(taskId - 1);
-            Writer writer = new FileWriter("data/todo.csv");
-            for(int i = 0; i < tasks.size(); i++){
-                writer.write(String.valueOf(i + 1) + "," + tasks.get(i).split(",")[1]);
-                writer.write("\n");
-                writer.flush();
-            }
-        } catch(Exception e){
-            System.out.println("Failed to rewrite tasks: " + e.getMessage());
-        }
+        System.out.println("Task has been removed successfully!"); // Move to UserInterface later
     }
 
     public static void main(String[] args) {
         Todo list = new Todo();
-        list.add("Kkas");
+        list.add("read the course material");
+        list.add("watch the latest fool us");
+        list.add("take it easy");
+        list.print();
+        list.remove(2);
+        list.print();
+        list.add("buy raisins");
+        list.print();
+        list.remove(1);
+        list.remove(1);
+        list.print();
+
     }
 }
