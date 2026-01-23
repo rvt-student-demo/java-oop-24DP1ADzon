@@ -20,6 +20,7 @@ public class Orders {
             }
             System.out.println();
             System.out.println("Kopeja pasutijumu summa: " + sum + " EUR");
+            reader.close();
 
         } catch (Exception e) {
             System.out.println("Kluda");
