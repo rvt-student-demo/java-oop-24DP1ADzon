@@ -42,7 +42,6 @@ public class Todo {
         ArrayList<String> tasks = this.readFile();
         tasks.add("," + task);
         this.writeFile(tasks);
-        System.out.println("Task has been saved successfully!"); // Move to UserInterface later
     }
 
     public void print(){
@@ -61,6 +60,6 @@ public class Todo {
         tasks.remove(taskId - 1);
         this.writeFile(tasks);
 
-        System.out.println("Task has been removed successfully!"); // Move to UserInterface later
+        System.out.println("Task has been removed successfully!");
     }
 }

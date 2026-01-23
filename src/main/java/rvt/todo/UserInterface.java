@@ -23,6 +23,7 @@ public class UserInterface {
                     System.out.print("To add: ");
                     userArgument = scanner.nextLine();
                     todo.add(userArgument);
+                    System.out.println("Task has been saved successfully!");
                     break;
                 
                 case "list":
@@ -33,6 +34,7 @@ public class UserInterface {
                     System.out.print("To remove: ");
                     userArgument = scanner.nextLine();
                     todo.remove(Integer.valueOf(userArgument));
+                    System.out.println("Task has been removed successfully!");
                     break;
                 
                 case "stop":
