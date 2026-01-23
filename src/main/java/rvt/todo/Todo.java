@@ -16,6 +16,7 @@ public class Todo {
             while (reader.hasNextLine()) {
                 fileData.add(reader.nextLine());
             }           
+            reader.close();
 
         } catch (Exception e) {
             System.out.println("Failed to read the file: " + e.getMessage());
@@ -52,6 +53,7 @@ public class Todo {
             String[] stringParts = tasks.get(i).split(",");
             System.out.println(stringParts[0] + ": " + stringParts[1]);
         }
+        System.out.println();
     }
 
     public void remove(int taskId){
@@ -60,21 +62,5 @@ public class Todo {
         this.writeFile(tasks);
 
         System.out.println("Task has been removed successfully!"); // Move to UserInterface later
-    }
-
-    public static void main(String[] args) {
-        Todo list = new Todo();
-        list.add("read the course material");
-        list.add("watch the latest fool us");
-        list.add("take it easy");
-        list.print();
-        list.remove(2);
-        list.print();
-        list.add("buy raisins");
-        list.print();
-        list.remove(1);
-        list.remove(1);
-        list.print();
-
     }
 }
