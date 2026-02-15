@@ -9,7 +9,7 @@ public class Cli {
         return name.matches(regex);
     }
     public static boolean validateEmail(String email){
-        String regex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}";
+        String regex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}";
         return email.matches(regex);
     }
     public static boolean validatePerCode(String personeCode){
@@ -17,13 +17,17 @@ public class Cli {
         return personeCode.matches(regex);
     }
 
-    private static void printLine(int name, int lastName, int email) {
+    private static void printLine(int name, int lastName, int email, int perCode, int regDate) {
         System.out.print("+");
         for (int i = 0; i < name + 2; i++) System.out.print("-");
         System.out.print("+");
         for (int i = 0; i < lastName + 2; i++) System.out.print("-");
         System.out.print("+");
         for (int i = 0; i < email + 2; i++) System.out.print("-");
+        System.out.print("+");
+        for (int i = 0; i < perCode + 2; i++) System.out.print("-");
+        System.out.print("+");        
+        for (int i = 0; i < regDate + 2; i++) System.out.print("-");
         System.out.println("+");
 }
 
@@ -38,23 +42,27 @@ public class Cli {
         int maxNameLength = "Name".length();
         int maxLastNameLength = "Last Name".length();
         int maxEmailLength = "Email".length();
+        int personeCodeLength = 12;
+        int dateLength = 16;
 
         String[] fileString;
+        System.out.println();
         for(int i = 0; i < file.size(); i++){
             fileString = file.get(i).split(",");
             if(fileString[0].length() > maxNameLength) maxNameLength = fileString[0].length();
             if(fileString[1].length() > maxLastNameLength) maxLastNameLength = fileString[1].length();
             if(fileString[2].length() > maxEmailLength) maxEmailLength = fileString[2].length();
         }
-        printLine(maxNameLength, maxLastNameLength, maxEmailLength);    
-        System.out.printf("| %-" + maxNameLength + "s | %-" + maxLastNameLength + "s | %-" + maxEmailLength + "s |\n", "Name", "Last Name", "Email");
-        printLine(maxNameLength, maxLastNameLength, maxEmailLength);    
+        printLine(maxNameLength, maxLastNameLength, maxEmailLength, personeCodeLength, dateLength);    
+        System.out.printf("| %-" + maxNameLength + "s | %-" + maxLastNameLength + "s | %-" + maxEmailLength + "s | %-" + personeCodeLength + "s | %-" + dateLength + "s |\n", "Name", "Last Name", "Email", "Persone Code", "Registered");
+        printLine(maxNameLength, maxLastNameLength, maxEmailLength, personeCodeLength, dateLength);    
+
 
         for(int i = 0; i < file.size(); i++){
             fileString = file.get(i).split(",");
-                System.out.printf("| %-" + maxNameLength + "s | %-" + maxLastNameLength + "s | %-" + maxEmailLength + "s |\n", fileString[0], fileString[1], fileString[2]);
+                System.out.printf("| %-" + maxNameLength + "s | %-" + maxLastNameLength + "s | %-" + maxEmailLength + "s |%-"  + personeCodeLength + "s | %-"  + dateLength + "s | \n", fileString[0], fileString[1], fileString[2], fileString[3], fileString[4]);
         }
-        printLine(maxNameLength, maxLastNameLength, maxEmailLength);
+        printLine(maxNameLength, maxLastNameLength, maxEmailLength, personeCodeLength, dateLength);    
     }
 
     public static void register(){
