@@ -1,5 +1,6 @@
 package rvt.studentRegistration;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,7 +31,6 @@ public class Cli {
         for (int i = 0; i < regDate + 2; i++) System.out.print("-");
         System.out.println("+");
 }
-
     
     public static void list(){
         ArrayList<String> file = FileHandler.readFile();
@@ -57,7 +57,6 @@ public class Cli {
         System.out.printf("| %-" + maxNameLength + "s | %-" + maxLastNameLength + "s | %-" + maxEmailLength + "s | %-" + personeCodeLength + "s | %-" + dateLength + "s |\n", "Name", "Last Name", "Email", "Persone Code", "Registered");
         printLine(maxNameLength, maxLastNameLength, maxEmailLength, personeCodeLength, dateLength);    
 
-
         for(int i = 0; i < file.size(); i++){
             fileString = file.get(i).split(",");
                 System.out.printf("| %-" + maxNameLength + "s | %-" + maxLastNameLength + "s | %-" + maxEmailLength + "s |%-"  + personeCodeLength + "s | %-"  + dateLength + "s | \n", fileString[0], fileString[1], fileString[2], fileString[3], fileString[4]);
@@ -65,9 +64,38 @@ public class Cli {
         printLine(maxNameLength, maxLastNameLength, maxEmailLength, personeCodeLength, dateLength);    
     }
 
-    public static void register(){
-        System.out.println("register function is not implemented yet");
+    public static String[] validateInput(){
+        String name, lastName, email, perCode;
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter name: ");
+            name = scanner.nextLine();
+            if(!validateName(name)) continue;
+
+            System.out.print("Enter last name: ");
+            lastName = scanner.nextLine();
+            if(!validateName(lastName)) continue;
+
+            System.out.print("Enter email: ");
+            email = scanner.nextLine();
+            if(!validateEmail(email)) continue;
+
+            System.out.print("Enter persone code: ");
+            perCode = scanner.nextLine();
+            if(!validatePerCode(perCode)) continue;
+            break;
+        }
+        String[] dataParts = LocalDateTime.now().toString().split("T");
+        String[] data = {name, lastName, email, perCode, dataParts[0] + " " + dataParts[1].substring(0, 5)};
+        return data;
     }
+
+    public static void register(String[] data){
+        ArrayList<String> file = FileHandler.readFile();
+        file.add(data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4]);
+        FileHandler.writeFile(file);
+    }
+
     public static void delete(){
         System.out.println("delete function is not implemented yet");
     }
@@ -95,7 +123,7 @@ public class Cli {
                 case "2":
                 case "rg":
                 case "register":
-                    register();
+                    register(validateInput());
                     break;
                 case "3":
                 case "d":

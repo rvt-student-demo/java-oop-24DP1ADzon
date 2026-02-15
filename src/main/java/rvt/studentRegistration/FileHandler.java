@@ -25,7 +25,7 @@ public class FileHandler{
         try{
             Writer writer = new FileWriter("data/registration.csv");
             for(int i = 0; i < fileStrings.size(); i++){
-                writer.write(fileStrings.get(i));
+                writer.write(fileStrings.get(i) + "\n");
             }
             writer.flush();
             writer.close();
