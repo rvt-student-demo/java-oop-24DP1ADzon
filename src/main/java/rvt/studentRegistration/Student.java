@@ -23,4 +23,9 @@ public class Student {
         String[] dataArray = {this.name, this.lastName, this.email, this.personeCode, this.regDate};
         return new ArrayList<>(Arrays.asList(dataArray));
     }
+
+    public String toString(){
+        ArrayList<String> data = getData();
+        return data.get(0) + "," + data.get(1) + "," + data.get(2) + "," + data.get(3) + "," + data.get(4);
+    }
 }
