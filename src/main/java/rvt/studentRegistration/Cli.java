@@ -111,17 +111,95 @@ public class Cli {
         }
         FileHandler.writeFile(file);
     }
-    public static void edit(){
-        System.out.println("edit function is not implemented yet");
+
+    public static String[] editInput(){
+        Scanner scanner = new Scanner(System.in);
+        String[] returnData = new String[2];
+        String userInput;
+        System.out.println("1. Name\n2. Last name\n3. Email\n4. Persone code");
+        System.out.print("Enter what to edit: ");
+        String userChoice = scanner.nextLine();
+        while (true) {
+            switch (userChoice.toLowerCase()) {
+                case "1":
+                case "n":
+                case "name":
+                    while (true) {
+                        System.out.print("Enter new name: ");
+                        userInput = scanner.nextLine();
+                        if(validateName(userInput)) break;
+                    }
+                    returnData[0] = "0";
+                    returnData[1] = userInput;
+                    return returnData;
+                case "2":
+                case "l":
+                case "last name":
+                    while (true) {
+                        System.out.print("Enter new last name: ");
+                        userInput = scanner.nextLine();
+                        if(validateName(userInput)) break;
+                    }
+                    returnData[0] = "1";
+                    returnData[1] = userInput;
+                    return returnData;
+                case "3":
+                case "e":
+                case "email":
+                    while (true) {
+                        System.out.print("Enter new email: ");
+                        userInput = scanner.nextLine();
+                        if(validateEmail(userInput)) break;
+                    }
+                    returnData[0] = "2";
+                    returnData[1] = userInput;
+                    return returnData;
+                case "4":
+                case "p":
+                case "persone code":             
+                    while (true) {
+                        System.out.print("Enter new persone code: ");
+                        userInput = scanner.nextLine();
+                        if(validatePerCode(userInput)) break;
+                    }
+                    returnData[0] = "3";
+                    returnData[1] = userInput;
+                    return returnData;
+                default:
+                    System.out.println("Wrong input!");
+                    break;
+            }
+        }
     }
+
+    public static String editString(String string, String[] editData){
+        String[] stringParts = string.split(",");
+        stringParts[Integer.valueOf(editData[0])] = editData[1];
+        return stringParts[0] + "," + stringParts[1] + "," + stringParts[2] + "," + stringParts[3] + "," + stringParts[4];
+    }
+
+    public static void edit(String perCode){
+        ArrayList<String> file = FileHandler.readFile();
+        String fileLine;
+        String linePerCode;
+        for(int i = 0; i < file.size(); i++){
+            fileLine = file.get(i);
+            linePerCode = fileLine.split(",")[3];
+            if(linePerCode.equals(perCode)){
+                file.set(i, editString(file.get(i), editInput()));
+            }
+        }
+        FileHandler.writeFile(file);
+    }
+
     public static void help(){
         System.out.println("\t\t     Avaible commands:");
         System.out.println("\n1. list\n2. register\n3. delete\n4. edit\n5. help\n6. stop\n");
     }
     
-
     public static void userInterface(){
         Scanner scanner = new Scanner(System.in);
+        String perCode;
         help();
         while (true) {
             System.out.print("\nEnter a command: ");
@@ -140,7 +218,6 @@ public class Cli {
                 case "3":
                 case "d":
                 case "delete":
-                    String perCode;
                     while (true) {
                         System.out.print("Enter persone code: ");
                         perCode = scanner.nextLine();
@@ -151,7 +228,12 @@ public class Cli {
                 case "4":
                 case "e":
                 case "edit":
-                    edit();
+                    while (true) {
+                        System.out.print("Enter persone code: ");
+                        perCode = scanner.nextLine();
+                        if(validatePerCode(perCode)) break;
+                    }
+                    edit(perCode);
                     break;
                 case "5":
                 case "h":
