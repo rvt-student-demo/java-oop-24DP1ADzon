@@ -62,7 +62,7 @@ public class Cli {
             fileString = file.get(i).split(",");
                 System.out.printf("| %-" + maxNameLength + "s | %-" + maxLastNameLength + "s | %-" + maxEmailLength + "s |%-"  + personeCodeLength + "s | %-"  + dateLength + "s | \n", fileString[0], fileString[1], fileString[2], fileString[3], fileString[4]);
         }
-        printLine(maxNameLength, maxLastNameLength, maxEmailLength, personeCodeLength, dateLength);    
+        printLine(maxNameLength, maxLastNameLength, maxEmailLength, personeCodeLength, dateLength);
     }
 
     public static String validateInput(){
@@ -94,6 +94,12 @@ public class Cli {
 
     public static void register(String data){
         ArrayList<String> file = FileHandler.readFile();
+        for(int i = 0; i < file.size(); i++){
+            if(file.get(i).contains(data.split(",")[3])){
+                System.out.println("There already is a student with that persone code!");
+                return;
+            }
+        }
         file.add(data);
         FileHandler.writeFile(file);
     }
