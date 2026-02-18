@@ -1,9 +1,9 @@
 package rvt.studentRegistration;
 
-import java.io.File;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import rvt.utils.ConsoleColors;
 
 public class Cli {
     public static boolean validateName(String name){ // Name and Last name
@@ -55,12 +55,12 @@ public class Cli {
             if(fileString[2].length() > maxEmailLength) maxEmailLength = fileString[2].length();
         }
         printLine(maxNameLength, maxLastNameLength, maxEmailLength, personeCodeLength, dateLength);    
-        System.out.printf("| %-" + maxNameLength + "s | %-" + maxLastNameLength + "s | %-" + maxEmailLength + "s | %-" + personeCodeLength + "s | %-" + dateLength + "s |\n", "Name", "Last Name", "Email", "Persone Code", "Registered");
+        System.out.printf("| %-" + maxNameLength + "s | %-" + maxLastNameLength + "s | %-" + maxEmailLength + "s | %-" + personeCodeLength + "s | %-" + dateLength + "s |\n", ConsoleColors.RED.getCode() + "Name" + ConsoleColors.RESET.getCode(), ConsoleColors.GREEN.getCode() + "Last Name" + ConsoleColors.RESET.getCode(), ConsoleColors.YELLOW.getCode() +"Email" + ConsoleColors.RESET.getCode(), ConsoleColors.RED.getCode() + "Persone Code" + ConsoleColors.RESET.getCode(), ConsoleColors.CYAN.getCode() + "Registered" + ConsoleColors.RESET.getCode());
         printLine(maxNameLength, maxLastNameLength, maxEmailLength, personeCodeLength, dateLength);    
 
         for(int i = 0; i < file.size(); i++){
             fileString = file.get(i).split(",");
-                System.out.printf("| %-" + maxNameLength + "s | %-" + maxLastNameLength + "s | %-" + maxEmailLength + "s |%-"  + personeCodeLength + "s | %-"  + dateLength + "s | \n", fileString[0], fileString[1], fileString[2], fileString[3], fileString[4]);
+                System.out.printf("| %-" + maxNameLength + "s | %-" + maxLastNameLength + "s | %-" + maxEmailLength + "s |%-"  + personeCodeLength + "s | %-"  + dateLength + "s | \n", ConsoleColors.RED.getCode() + fileString[0] + ConsoleColors.RESET.getCode(), ConsoleColors.GREEN.getCode() + fileString[1] + ConsoleColors.RESET.getCode(), ConsoleColors.YELLOW.getCode() + fileString[2] + ConsoleColors.RESET.getCode(), ConsoleColors.RED.getCode() + fileString[3] + ConsoleColors.RESET.getCode(), ConsoleColors.CYAN.getCode() + fileString[4] + ConsoleColors.RESET.getCode());
         }
         printLine(maxNameLength, maxLastNameLength, maxEmailLength, personeCodeLength, dateLength);
     }
