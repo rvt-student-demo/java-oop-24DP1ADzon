@@ -1,5 +1,6 @@
 package rvt;
 
 public interface Printable {
-    abstract void print(); // var nerakstit public, jo abstraktas metodes ir publiskas pec nosacijuma  
+    public static String id = "#1";
+    public abstract void print(); // var nerakstit public, jo abstraktas metodes ir publiskas pec nosacijuma  
 }
