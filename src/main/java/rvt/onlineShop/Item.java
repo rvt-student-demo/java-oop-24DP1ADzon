@@ -21,6 +21,6 @@ public class Item {
 
     @Override
     public String toString(){
-        return this.product + ":" + this.qty;
+        return this.product + ": " + this.qty;
     }
 }
