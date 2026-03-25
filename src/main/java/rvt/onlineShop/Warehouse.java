@@ -13,21 +13,13 @@ public class Warehouse{
     }
 
     public int price(String product){
-        try {
-            return prices.get(product);
-        } catch (Exception e) {
-            return -99;
-        }
+        return prices.getOrDefault(product, -99);
     }
 
     public int stock(String product){
-        try {
-            return stock.get(product);
-        } catch (Exception e) {
-            return 0;
-        }
+        return stock.getOrDefault(product, 0);
     }
-
+    
     public boolean take(String product){
         try {
             if(stock.get(product) > 0){
