@@ -21,7 +21,7 @@ public class Store {
         this.warehouse.products().forEach(product -> System.out.println(product));
 
         while (true) {
-            System.out.print("What to put in the cart (press enter to go to the register): ");
+             System.out.print("What to put in the cart (press enter to go to the register): ");
             String product = scanner.nextLine();
             if (product.isEmpty()) {
                 break;
